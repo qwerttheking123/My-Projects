@@ -1,12 +1,9 @@
-#add in accesorys and necron and the other versions of trhem armor
-maxnum = 1000
-
-# the way the item list works is
-# name of item, teir of item, amount of prices, placeholder list of prices, minium flip difference
+# this code is meant to be used to find "flips", or good deals on items that can be resold for profit later on in the minecraft server hypixel
 import requests
 import pyperclip as pc
 import time
 from playsound import playsound
+#this was made about last year, so I wasnt very adept with programming at the time, as seen by this dict that could of easily been an array full of nested arrays
 items = {
     '7': ['Juju Shortbow', 'EPIC', 7, [], 2100000],
     '8': ['The Art of War', 'LEGENDARY', 7, [], 750000],
@@ -30,6 +27,7 @@ items = {
     '27': ['Wither Boots', 'LEGENDARY', 5, [], 540000],
 
 }
+#this function and listtoprice will set the price of the items im looking for, using an equation that is about ITEM PRICE = Sum of the most cheap -  a certain value configured for each item
 foundauctions  = []
 itemskey = list(items.keys())
 def setprice(itemname, bin, price, tier):
@@ -49,6 +47,7 @@ def listtoprice():
         Sum = sum(items[key][3])
         print (items[key])
         items[key][3] = int(round(Sum/amount - items[key][4], -5))
+#this is the code that would be running 99% of the time, it takes all the parameters from the hypixel skyblock api and uses the price set above to find if the item is worth buying
 def checkformatch(itemname, bin, price, tier, uuid):
     for x in range(len(itemskey)):
         key = itemskey[x]
@@ -63,6 +62,7 @@ def checkformatch(itemname, bin, price, tier, uuid):
                             pc.copy('/viewauction ' + uuid)
                             foundauctions.append(uuid)
                             time.sleep(2)
+                            #shaded was a rare part of a talisman where if it had shaded you could get 1,000,000 from a buyback program of sorts
             elif 'shaded' in itemname:
                 if bin == True:
                     if price <=500000:
@@ -70,6 +70,7 @@ def checkformatch(itemname, bin, price, tier, uuid):
                         pc.copy('/viewauction ' + uuid)
                         foundauctions.append(uuid)
                         time.sleep(2)
+#this function is the one that will pass the data into the checkformatch function above, and you can also see the link to the api in this one
 def checkah():
     page = 0
     data = requests.get('https://api.hypixel.net/skyblock/auctions?', params = {'page': page}).json()
@@ -77,7 +78,7 @@ def checkah():
     time.sleep(1)
     while True:
         data = requests.get('https://api.hypixel.net/skyblock/auctions?', params = {'page': page}).json()
-        for x in range(maxnum):
+        for x in range(1000):
             uuid =  (data['auctions'][checknum]['uuid'])
             itemname = (data['auctions'][checknum]['item_name'])
             bin = (data['auctions'][checknum]['bin'])
@@ -90,6 +91,7 @@ def checkah():
         checknum = 0
         if page == 7:
             page = 0
+#this function basically runs all of the other functions
 def pricesetting():
     data = requests.get('https://api.hypixel.net/skyblock/auctions?', params = {'page': 0}).json()
     maxpage = (data['totalPages'])
@@ -100,7 +102,7 @@ def pricesetting():
             listtoprice()
             print (items)
             checkah()
-        if checknum == maxnum:
+        if checknum == 1000:
             page = page + 1
             data = requests.get('https://api.hypixel.net/skyblock/auctions?', params = {'page': page}).json()
             checknum = 0
