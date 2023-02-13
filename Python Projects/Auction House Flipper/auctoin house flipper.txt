@@ -1,0 +1,2 @@
+In this python project, I designed a simple python script to pull from the hypixel skyblock api and use that data to find good deals
+I learned alot about the python requests package while using it, as it was how communicated with apis.
