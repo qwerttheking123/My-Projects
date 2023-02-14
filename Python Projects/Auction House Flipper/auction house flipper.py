@@ -1,4 +1,4 @@
-#This python file uses the hypixel skyblock api to find good deals on the ingame market
+-#This python file uses the hypixel skyblock api to find good deals on the ingame market
 maxnum = 1000
 
 # the way the item list works is
@@ -6,7 +6,6 @@ maxnum = 1000
 import requests
 import pyperclip as pc
 import time
-from playsound import playsound
 items = {
     '7': ['Juju Shortbow', 'EPIC', 7, [], 2100000],
     '8': ['The Art of War', 'LEGENDARY', 7, [], 750000],
