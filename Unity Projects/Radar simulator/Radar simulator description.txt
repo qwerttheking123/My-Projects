@@ -1,2 +1,4 @@
 In this project, I made a simulator for an escape room puzzle, in which you had to put a plane indicator in the right positions.
 the unity project connected with an arduino uno, which acted as the way input was received, and activated a mag lock once open
+It is incomplete
+
